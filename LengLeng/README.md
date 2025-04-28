@@ -1,193 +1,102 @@
 # LengLeng iOS App
 
-A social polling app that lets users participate in polls, receive notifications, and interact with other users.
+This directory contains the main iOS application code for LengLeng, a social networking and polling app built with SwiftUI and Firebase.
 
-## Prerequisites
+## Development Setup
 
-Before building the app, ensure you have the following installed:
+### Prerequisites
 
 - Xcode 15.0 or later
 - iOS 17.0 or later
-- Swift Package Manager (for dependency management)
+- Swift 5.9+
+- Firebase account and configuration
 - Apple Developer Account (for device builds)
 
-## Setup
+### Project Structure
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/johnnybal/qqq.git
-   cd qqq/LengLeng
-   ```
+```
+LengLeng/
+├── Features/           # Feature-specific modules
+│   ├── Authentication/
+│   ├── Profile/
+│   ├── Polls/
+│   ├── Messaging/
+│   └── Notifications/
+├── Services/          # Firebase and other service integrations
+├── Models/            # Data models
+├── Views/             # UI components
+└── Resources/         # Assets and configuration files
+```
 
-2. Install dependencies:
-   ```bash
-   swift package resolve
-   ```
+### Building the App
 
-3. Open the project:
-   ```bash
-   open LengLeng.xcodeproj
-   ```
+The project supports multiple environments and build configurations:
 
-## Building the App
-
-The project includes a build script that supports different environments and targets. The available options are:
-
-### Environments
+#### Environments
 - `development`: For development and testing
 - `staging`: For beta testing and internal distribution
 - `production`: For App Store distribution
 
-### Targets
-- `simulator`: For running on iOS Simulator
-- `device`: For creating IPA files for physical devices
-
-### Build Commands
+#### Build Commands
 
 1. Make the build script executable:
    ```bash
    chmod +x scripts/build.sh
    ```
 
-2. Run the build script with your desired environment and target:
+2. Build for development:
    ```bash
-   # For development simulator build
-   ./scripts/build.sh development simulator
-
-   # For staging device build
-   ./scripts/build.sh staging device
-
-   # For production device build
-   ./scripts/build.sh production device
+   ./scripts/build.sh development
    ```
 
-### Build Outputs
+3. Build for staging:
+   ```bash
+   ./scripts/build.sh staging
+   ```
 
-- Simulator builds will be available in the derived data folder
-- Device builds will create IPA files in the `build` directory
+4. Build for production:
+   ```bash
+   ./scripts/build.sh production
+   ```
 
-## Configuration
+### Testing
 
-Before building for devices, you need to:
+1. Run unit tests:
+   ```bash
+   xcodebuild test -scheme LengLeng -destination 'platform=iOS Simulator,name=iPhone 15'
+   ```
 
-1. Update the Team ID in the export options plist files:
-   - `ExportOptions-development.plist`
-   - `ExportOptions-staging.plist`
-   - `ExportOptions-production.plist`
+2. Run UI tests:
+   ```bash
+   xcodebuild test -scheme LengLengUITests -destination 'platform=iOS Simulator,name=iPhone 15'
+   ```
 
-   Replace `YOUR_TEAM_ID` with your actual Apple Developer Team ID.
+## Development Guidelines
 
-2. Ensure your Apple Developer account has the necessary certificates and provisioning profiles.
-
-## Features
-
-### Polls
-- View and participate in polls
-- Real-time vote counting
-- Visual feedback for selected options
-- Poll categories and expiration tracking
-- Pull-to-refresh for latest polls
-
-### User Experience
-- Clean and intuitive interface
-- Smooth voting animations
-- Percentage-based results display
-- Category-based organization
-- Time remaining indicators
-
-### Notifications
-- Push notifications for poll updates
-- Match notifications
-- System alerts
-
-### User Management
-- User authentication
-- Profile management
-- Settings customization
-- Social connections
-- Invitation system
-- Subscription management
-
-## Architecture
-
-The app follows MVVM architecture with the following structure:
-- Features/
-  - Polls/
-    - PollsView.swift (SwiftUI)
-    - PollSystem.swift (UIKit)
-  - Notifications/
-    - NotificationsSystem.swift
-  - Profile/
-    - ProfileView.swift
-    - EditProfileView.swift
-    - SettingsView.swift
-    - UserProfileSystem.swift
-  - Social/
-    - SocialView.swift
-    - SocialGraphSystem.swift
-    - InviteFriendsView.swift
-    - SubscriptionStatusView.swift
-- Models/
-  - Poll.swift
-  - PollOption.swift
-  - PollVote.swift
-  - User.swift
-  - Connection.swift
-  - Invitation.swift
-- Services/
-  - FirebaseService.swift
-  - UserService.swift
-  - InvitationService.swift
-  - SubscriptionService.swift
-- Utils/
-
-## Dependencies
-
-- Firebase SDK 10.24.0
-  - FirebaseAuth
-  - FirebaseFirestore
-  - FirebaseMessaging
-  - FirebaseAnalytics
+1. Follow SwiftUI best practices
+2. Use SwiftLint for code style consistency
+3. Write unit tests for new features
+4. Document public interfaces
+5. Follow the project's architecture patterns
 
 ## Troubleshooting
 
-### Common Issues
+Common issues and solutions:
 
-1. **Build Fails with Code Signing Errors**
-   - Ensure you have valid certificates and provisioning profiles
-   - Check your Team ID in the export options plist files
-   - Verify your Apple Developer account status
+1. **Firebase Configuration**
+   - Ensure `GoogleService-Info.plist` is properly added to the project
+   - Verify Firebase dependencies are up to date
 
-2. **Dependencies Not Found**
-   - Run `swift package resolve` again
-   - Check your Swift version
-   - Ensure you're opening the correct project file
+2. **Build Issues**
+   - Clean build folder: `Cmd + Shift + K`
+   - Reset package caches: `File > Packages > Reset Package Caches`
 
-3. **Simulator Build Fails**
-   - Check if the specified simulator exists
-   - Update the simulator name in the build script if needed
+3. **Simulator Issues**
+   - Reset simulator: `Device > Erase All Content and Settings`
+   - Check simulator logs for detailed error information
 
-### Getting Help
+## Related Resources
 
-If you encounter any issues not covered here:
-1. Check the Xcode build logs
-2. Verify your environment setup
-3. Contact the development team
-
-## Additional Resources
-
-- [Apple Developer Documentation](https://developer.apple.com/documentation/)
-- [Swift Package Manager Documentation](https://www.swift.org/package-manager/)
-- [Xcode Build System Guide](https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/XcodeBuildSystem/300-Build_System_Overview/build_system_overview.html)
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details. 
+- [Main Project README](../README.md)
+- [SwiftUI Documentation](https://developer.apple.com/documentation/swiftui)
+- [Firebase iOS SDK](https://firebase.google.com/docs/ios/setup) 
